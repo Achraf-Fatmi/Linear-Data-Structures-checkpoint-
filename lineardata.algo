@@ -1,0 +1,114 @@
+ALGORITHM SumOfDifferentintegersS1
+VAR
+    Set1 : ARRAY_OF INTEGER[];
+    Set2 : ARRAY_OF INTEGER[];
+    i:INTEGER;
+    j:INTEGER;
+    temp:INTEGER:=0;
+    sum:INTEGER:=0;
+BEGIN
+FOR i FROM 0 TO Set1.length-1 STEP 1  DO
+    FOR j FROM 0 TO Set2.length-1 STEP 1  DO
+        IF (Set1[i]<>Set2[j]) THEN
+            temp:= Set1[i]
+            ELSE
+                temp:=0
+        END_IF
+    END_FOR
+    sum:=sum+temp
+END_FOR
+FOR j FROM 0 TO Set2.length-1 STEP 1  DO
+    FOR i FROM 0 TO Set1.length-1 STEP step  DO
+        IF (Set1[i]<>Set2[j]) THEN
+            temp:= Set2[j];
+        ELSE
+            temp:=0;
+        END_IF
+    END_FOR
+    sum:=sum+temp;
+        write(sum)
+END_FOR
+END
+
+ALGORITHM SumOfSimilarIntegersS1
+VAR
+    Set1 : ARRAY_OF INTEGER[];
+    Set2 : ARRAY_OF INTEGER[];
+    i:INTEGER;
+    j:INTEGER;
+    temp:INTEGER:=0;
+    sum:INTEGER:=0;
+BEGIN
+FOR i FROM 0 TO Set1.length-1 STEP 1  DO
+    FOR j FROM 0 TO Set2.length-1 STEP 1  DO
+        IF (Set1[i]=Set2[j]) THEN
+            temp:= Set1[i]*2
+            ELSE
+                temp:=0
+        END_IF
+        
+    END_FOR
+    sum:=sum+temp
+    write(sum)
+END_FOR
+END
+
+ALGORITHM SumOfDifferentintegersS2
+VAR
+    htab : HASH_TABLE<INTEGER ,INTEGER>;
+    i,j,sum : INTEGER;
+    count : INTEGER:=1;
+    sum: INTEGER;
+    Set1 : ARRAY_OF INTEGER[];
+    Set2 : ARRAY_OF INTEGER[];
+BEGIN
+FOR i FROM 0 TO Set1.length-1 STEP 1  DO
+    htab.insert (Set1[i], 1);
+    FOR j FROM 0 TO Set2.length-1 STEP 1  DO
+        count:=1;
+        IF (htab.lookup(Set2[j])=true) THEN
+            count:= count + 1;
+            htab.insert(Set1[i], count);
+        END_IF
+    END_FOR
+    IF (count = 1) THEN
+        sum:= sum + Set1[i];
+    END_IF
+END_FOR
+FOR j FROM 0 TO Set2.length-1 STEP 1  DO
+    count:= 1;
+    IF (htab.lookup (Set2[j])= false) THEN
+        htab.insert(Set2[j],count);
+    END_IF
+    IF (count=1) THEN
+        sum:= sum + Set2[j];
+    END_IF
+END_FOR
+
+write (sum);
+END
+
+ALGORITHM SumOfSimilarIntegersS2
+VAR
+    htab : HASH_TABLE<INTEGER ,INTEGER>;
+    i,j,sum : INTEGER;
+    count : INTEGER:=1;
+    sum: INTEGER;
+    Set1 : ARRAY_OF INTEGER[];
+    Set2 : ARRAY_OF INTEGER[];
+BEGIN
+FOR i FROM 0 TO Set1.length-1 STEP 1  DO
+    htab.insert (Set1[i], 1);
+    FOR j FROM 0 TO Set2.length-1 STEP 1  DO
+        count:=1;
+        IF (htab.lookup(Set2[j])=true) THEN
+            count:= count + 1;
+            htab.insert(Set1[i], count);
+        END_IF
+    END_FOR
+    IF (count <> 1) THEN
+        sum:= sum + (Set1[i] * 2);
+    END_IF
+END_FOR
+write (sum);
+END
